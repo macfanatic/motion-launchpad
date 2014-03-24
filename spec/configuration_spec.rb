@@ -9,13 +9,14 @@ describe Motion::Launchpad do
     instance.should.be.equal Motion::Launchpad.configure
   end
 
-  it "defaults the preferences key to :launch_count" do
-    instance = Motion::Launchpad::Schedule.new
-    instance.preferences_key.should.be.equal :launch_count
-  end
+  it "delegates #run! to an instance" do
+    @runner = nil
 
-  it "allows you to customize the preferences key" do
-    instance = Motion::Launchpad::Schedule.new preferences_key: :my_counter
-    instance.preferences_key.should.be.equal :my_counter
+    Motion::Launchpad.configure do |config|
+      config.on(:every) { @runner = true }
+    end
+
+    Motion::Launchpad.run!
+    @runner.should.be.true
   end
 end

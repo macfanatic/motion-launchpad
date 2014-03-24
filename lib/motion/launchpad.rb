@@ -11,6 +11,10 @@ module Motion
       instance
     end
 
-    module_function :configure
+    def run!
+      instance.run!
+    end
+
+    module_function :configure, :run!
   end
 end

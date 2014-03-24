@@ -11,6 +11,16 @@ describe Motion::Launchpad::Schedule do
     end
   end
 
+  it "defaults the preferences key to :launch_count" do
+    instance = Motion::Launchpad::Schedule.new
+    instance.preferences_key.should.be.equal :launch_count
+  end
+
+  it "allows you to customize the preferences key" do
+    instance = Motion::Launchpad::Schedule.new preferences_key: :my_counter
+    instance.preferences_key.should.be.equal :my_counter
+  end
+
   it "initializes NSUserDefaults store on #new" do
     instance = Motion::Launchpad::Schedule.new
     NSUserDefaults.standardUserDefaults[:launch_count].should.be.equal 1
