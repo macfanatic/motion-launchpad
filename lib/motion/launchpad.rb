@@ -1,14 +1,15 @@
 module Motion
-  class Launchpad
-
+  module Launchpad
+    
     class << self
       attr_accessor :instance
-
-      def configure(&block)
-        self.instance = new if instance.nil?
-        instance
-      end
     end
 
+    def configure(&block)
+      self.instance = Schedule.new if instance.nil?
+      instance
+    end
+
+    module_function :configure
   end
 end

@@ -1,7 +1,7 @@
 describe Motion::Launchpad do
 
   it "should return an instance" do
-    Motion::Launchpad.configure.should.be.instance_of Motion::Launchpad
+    Motion::Launchpad.configure.should.be.instance_of Motion::Launchpad::Schedule
   end
 
   it "should return the same instance twice" do
