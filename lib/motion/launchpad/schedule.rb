@@ -14,7 +14,23 @@ module Motion
         yield(self) if block_given?
       end
 
+      def on(count, &block)
+        @events << Event.new(count, block)
+      end
+
+      def run!
+        events.each { |e| e.call }
+      end
+
+      def events
+        @events.select { |e| e.applicable?(launch_count) }
+      end
+
       private
+
+      def launch_count
+        NSUserDefaults.standardUserDefaults[preferences_key]
+      end
 
       def handle_launch
         if NSUserDefaults.standardUserDefaults[preferences_key].nil?

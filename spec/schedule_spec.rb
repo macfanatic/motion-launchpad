@@ -16,4 +16,40 @@ describe Motion::Launchpad::Schedule do
     NSUserDefaults.standardUserDefaults[:launch_count].should.be.equal 1
   end
 
+  it "adds a new event when call #on inside the configure block" do
+    instance = Motion::Launchpad::Schedule.new
+    instance.configure do |config|
+      config.on(:every) { true }
+    end
+
+    instance.events.should.not.be.empty
+    e = instance.events.first
+    e.count.should.be.equal :every
+  end
+
+  it "calling #configure multiple times continues to add events" do
+    instance = Motion::Launchpad::Schedule.new
+    instance.configure do |config|
+      config.on(:every) { true }
+    end
+
+    instance.configure do |config|
+      config.on(1) { true }
+    end
+
+    instance.events.count.should.be.equal 2
+  end
+
+  it "executes the events when calling #run!" do
+    instance = Motion::Launchpad::Schedule.new
+    instance.configure do |config|
+      config.on(:every) { NSUserDefaults.standardUserDefaults[:my_testing_key] = "test" }
+    end
+
+    NSUserDefaults.standardUserDefaults[:my_testing_key].should.be.nil
+
+    instance.run!
+
+    NSUserDefaults.standardUserDefaults[:my_testing_key].should.be.equal "test"
+  end
 end
