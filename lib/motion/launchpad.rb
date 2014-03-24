@@ -5,8 +5,9 @@ module Motion
       attr_accessor :instance
     end
 
-    def configure(&block)
-      self.instance = Schedule.new if instance.nil?
+    def configure(*args, &block)
+      self.instance = Schedule.new(*args) if instance.nil?
+      instance.configure(&block) if block_given?
       instance
     end
 
