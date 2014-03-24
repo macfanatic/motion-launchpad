@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 $:.unshift File.expand_path('../lib', __FILE__)
-require 'motion-launchpad/version'
+require 'motion/launchpad/version'
 
 Gem::Specification.new do |s|
   s.name          = "motion-launchpad"
